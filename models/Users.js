@@ -25,6 +25,10 @@ const UserSchema= new mongoose.Schema({
     role:{
         type:String,
         default:"Owner"
+    },
+    owner:{
+        type:String,
+        default:"Owner"
     }
 }
 ,{

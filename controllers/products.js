@@ -62,9 +62,8 @@ try {
 
 
 const getProducts=async(req,res)=>{
-  let user= req.user;
-console.log(user);
-    const data= await  Product.find({owner:user.userId});
+ 
+    const data= await  Product.find().lean();
     if(!data){
   res.status(200).json([])
     }
@@ -74,7 +73,7 @@ console.log(user);
 }
 const getProduct=async(req,res)=>{
     try {
-      const data=await Product.findById(req.params.id)
+      const data=await Product.findById(req.params.id).lean();
    
       if(!data){
     res.status(200).json({msg:" Product Not Found Yet"})

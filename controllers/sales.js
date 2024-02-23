@@ -16,7 +16,8 @@ const createSale=async(req,res)=>{
            
             totalPrice:req.body.totalPrice,
             
-            createdBy:req.body.userId
+            createdBy:req.body.userId,
+            owner:req.body.owner
            
 
         })
@@ -71,7 +72,7 @@ const getStoreKeeperSales=async(req,res)=>{
     try {
    
      
-        const data= await  Sales.find({createdBy:storekeeperId});
+        const data= await  Sales.find({createdBy:storekeeperId}).sort({_id:-1});
         
         if(!data){
       res.status(200).json([])
@@ -89,11 +90,11 @@ const getStoreKeeperSales=async(req,res)=>{
 
 const getShopSales=async(req,res)=>{
    let user= req.user
-   let createdBy=user.userId
+   let owner=user.userId
     try {
         
       
-        const data= await  Sales.find({createdBy}).sort({_id:-1}) ;
+        const data= await  Sales.find().sort({_id:-1}).lean() ;
         if(!data){
       res.status(200).json({msg:"You Have Not Added Sales Yet"})
         }
@@ -114,7 +115,7 @@ const deleteSale=async(req,res)=>{
 }
 const getSale=async(req,res)=>{
     try {
-      const data=await Sales.findById(req.params.id)
+      const data=await Sales.findById(req.params.id).lean()
    
       if(!data){
     res.status(200).json({msg:" Sales Not Found Yet"})
@@ -160,7 +161,11 @@ const GetDailySales=async(req,res)=>{
       {$addFields:{date:"$first"}},
       {$project:{first:0}},
     ])
-  res.status(200).json(data)
+    if (!data) {
+        res.status(200).json([])
+    }else{
+        res.status(200).json(data)
+    }
   } catch (error) {
    throw error
   }
@@ -192,7 +197,11 @@ const GetDailySales=async(req,res)=>{
       {$addFields:{date:"$first"}},
       {$project:{first:0}},
     ])
-  res.status(200).json(data)
+    if (!data) {
+        res.status(200).json([])
+    }else{
+        res.status(200).json(data)
+    }
   } catch (error) {
    throw error
   }
@@ -224,7 +233,12 @@ const GetDailySales=async(req,res)=>{
       {$addFields:{date:"$first"}},
       {$project:{first:0}},
     ])
-  res.status(200).json(data)
+    if (!data) {
+        res.status(200).json([])
+    }else{
+        res.status(200).json(data)
+    }
+
   } catch (error) {
    throw error
   }
@@ -257,7 +271,11 @@ const GetDailySales=async(req,res)=>{
       {$addFields:{date:"$first"}},
       {$project:{first:0}},
     ])
-  res.status(200).json(data)
+    if (!data) {
+        res.status(200).json([])
+    }else{
+        res.status(200).json(data)
+    }
   } catch (error) {
    throw error
   }
@@ -294,7 +312,11 @@ const GetDailySales=async(req,res)=>{
                   }
               }
           ])
-          res.status(200).json(data)
+          if (!data) {
+            res.status(200).json([])
+        }else{
+            res.status(200).json(data)
+        }
       } catch (error) {
           res.status(500).json({msg:"server error"})
       }

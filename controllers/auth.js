@@ -20,6 +20,8 @@ const Register=async(req,res)=>{
           
           
               password:bcrypt.hashSync(req.body.password,8),
+              role:req.body.role,
+              owner:req.body.owner
               
             },
              
@@ -33,6 +35,7 @@ const Register=async(req,res)=>{
         phoneNumber:user.phoneNumber,
         storeName:user.storeName,
         role:user.role,
+        owner:user.owner,
       
         token:generateToken(createdUser)
     })
@@ -94,5 +97,18 @@ const Login=async(req,res)=>{
         }
     }
     
+    const getStoreKeepers=async(req,res)=>{
+        try {
+            let id= req.params.id
+            console.log(id);
+            const storekeepers=await User.find({owner:id});
+            console.log(storekeepers);
+            res.status(200).json(storekeepers)
+        } catch (error) {
+            res.status(500).json({message:"Error in the server"})
+        }
+      
 
-    module.exports={Register,Login,userDetails}
+    }
+
+    module.exports={Register,Login,userDetails,getStoreKeepers}

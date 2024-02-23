@@ -28,8 +28,7 @@ const StoreKeeperSchema= new mongoose.Schema({
         default:"storeKeeper"
     },
     employer:{
-        type:mongoose.Types.ObjectId,
-            ref:"UserSchema"
+        type:String,
     }
 }
 ,{
