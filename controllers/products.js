@@ -22,6 +22,7 @@ let owner=req.user
             sellingPrice:req.body.sellingPrice,
             quantityInStock:req.body.quantityInStock,
            valueOfStock:req.body.valueOfStock,
+           currency:req.body.currency,
        
            owner:req.body.owner
            
@@ -62,8 +63,8 @@ try {
 
 
 const getProducts=async(req,res)=>{
- 
-    const data= await  Product.find().lean();
+ let owner= req.params.id;
+    const data= await  Product.find({owner}).sort({_id:-1}).lean();
     if(!data){
   res.status(200).json([])
     }

@@ -38,7 +38,12 @@ valueOfStock:{
     type:Number,
     required:true
 },
-
+currency:{
+    type:String,
+    required:true,
+    value:["Zambian Kwacha","ZWL","USD"],
+    default : "K"
+},
 
 
     owner:{

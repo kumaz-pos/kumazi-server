@@ -19,7 +19,12 @@ const SalesSchema= new mongoose.Schema({
     paymentMethod:{
         type:String,
         required:true,
-        value:["Airtel Money","MTN Money","Cash"]
+        value:["Airtel Money","MTN Money","Cash","Ecocash","One Money","Telecash"]
+    },
+    currency:{
+        type:String,
+        required:true,
+        value:["Zambian Kwacha","ZWL","USD"]
     },
 
     
@@ -32,6 +37,10 @@ const SalesSchema= new mongoose.Schema({
         type:String,
         required:true
         
+    },
+    name:{
+        type:String,
+        required:true
     }
  
    

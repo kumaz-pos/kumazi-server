@@ -29,6 +29,10 @@ const UserSchema= new mongoose.Schema({
     owner:{
         type:String,
         default:"Owner"
+    },
+    country:{
+        type:String,
+        required:true
     }
 }
 ,{

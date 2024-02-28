@@ -1,48 +1,59 @@
 const User= require("../models/Users");
 const bcrypt= require('bcryptjs');
-const generateToken= require('../middleware/generateToken')
+const generateToken= require('../middleware/generateToken');
+async function checkExistingUser(model,enteredNumber){
+    let user= await model.findOne({phoneNumber:enteredNumber});
+    if (!user) {
+        return false
+    }else{
+return true
+    }
+    
+}
 const Register=async(req,res)=>{
    try {
-    let existingUser= await User.findOne({phoneNumber:req.body.phoneNumber});
-  
-    if (existingUser) {
-        res.status(401).json({message:"Phone number already exists"});
-    }
-    
+
    
-    if (!existingUser) {
-        const user=new  User({
+    let checkUser=await checkExistingUser(User,req.body.phoneNumber);
+    console.log(checkUser);
+  if (checkUser===true) {
+    res.status(401).json({message:"Phone number already exists"});
+  }else{
+    const user=new  User({
         
-            name:req.body.name,
-            phoneNumber:req.body.phoneNumber,
-         
-            
-          
-          
-              password:bcrypt.hashSync(req.body.password,8),
-              role:req.body.role,
-              owner:req.body.owner
-              
-            },
-             
+        name:req.body.name,
+        phoneNumber:req.body.phoneNumber,
      
-    
-    )
-    const createdUser=  user.save();
-    res.status(201).send({
-        _id:user._id,
-        name:user.name,
-        phoneNumber:user.phoneNumber,
-        storeName:user.storeName,
-        role:user.role,
-        owner:user.owner,
+        
       
-        token:generateToken(createdUser)
-    })
-        
-     
-    }
-       
+      
+          password:bcrypt.hashSync(req.body.password,8),
+          role:req.body.role,
+          owner:req.body.owner,
+          country:req.body.country
+         
+        },       
+ 
+
+)
+const createdUser=  user.save();
+res.status(201).send({
+    _id:user._id,
+    name:user.name,
+    phoneNumber:user.phoneNumber,
+    storeName:user.storeName,
+    role:user.role,
+    country:user.country,
+    owner:user.owner,
+  
+    token:generateToken(createdUser)
+})
+    
+ 
+  }
+  
+   
+ 
 
 
 
@@ -61,29 +72,32 @@ const Register=async(req,res)=>{
 const Login=async(req,res)=>{
     
     const user= await User.findOne({phoneNumber:req.body.phoneNumber});
-    console.log(user);
 
-    if (user) {
-        if (bcrypt.compareSync(req.body.password,user.password)) {
-            res.send({
-                _id:user._id,
-                name:user.name,
-                storeName:user.storeName,
-                role:user.role,
-                phoneNumber:user.phoneNumber,
-               
-               
-             
-               
-             
-              
-                
-                token:generateToken(user)
-            })
-            return 
-        }
+if (user) {
+    if (bcrypt.compareSync(req.body.password,user.password)) {
+        res.send({
+            _id:user._id,
+            name:user.name,
+            storeName:user.storeName,
+            role:user.role,
+            phoneNumber:user.phoneNumber,
+            country:user.country,
+           
+           
+         
+           
+         
+          
+            
+            token:generateToken(user)
+        })
+        return 
     }
+}else{
     res.status(401).send({message:"invalid phone number or password"})
+}
+  
+   
     }
 
     const userDetails=async(req,res)=>{

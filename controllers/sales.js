@@ -17,7 +17,9 @@ const createSale=async(req,res)=>{
             totalPrice:req.body.totalPrice,
             
             createdBy:req.body.userId,
-            owner:req.body.owner
+            currency:req.body.currency,
+            owner:req.body.owner,
+            name:req.body.name
            
 
         })
@@ -91,6 +93,7 @@ const getStoreKeeperSales=async(req,res)=>{
 const getShopSales=async(req,res)=>{
    let user= req.user
    let owner=user.userId
+   let id= req.params.id
     try {
         
       
@@ -133,7 +136,57 @@ const GetDailySales=async(req,res)=>{
    let user= req.user;
    let userId= user.userId
   try {
-  
+    let data= await Sales.aggregate([
+        {
+            "$group":{
+            "_id":{
+                "$add":[
+                    {"$subtract":[
+                    {"$subtract":["$createdAt",new Date(0)]},
+                    {
+                        "$mod":[
+                        {"$subtract":["$createdAt",new Date(0)]},
+                        ]
+                    }
+                    , 
+                    new Date(0)
+                    ]}
+                ]
+            },
+            "week":{"$first":{"$week":"$createdAt"}},
+            "month":{"$first":{"$month":"$createdAt"}},
+            "total":{"$sum":"$num"}
+            }
+        },
+        {
+            "$group":{
+                "_id":"$week",
+                "month":{"$first":"month"},
+                "days":{
+                    "$push":{
+                        "day":"_id",
+                        "total":"$total"
+                    }
+                },
+                "total":{"$sum":"$total"}
+            }
+        },
+        {
+            "$group":{
+                "_id":"$month",
+                "$weeks":{
+                    "$push":{
+                        "week":"$_id",
+                        "total":"$total",
+                        "days":"$days"
+                    }
+                },
+                "total":{"$sum":"$total"}
+            }
+        }
+    ])
+
+  /*
     const data= await Sales.aggregate([
         {$match:{"createdBy":userId}},
       {
@@ -161,6 +214,7 @@ const GetDailySales=async(req,res)=>{
       {$addFields:{date:"$first"}},
       {$project:{first:0}},
     ])
+    */
     if (!data) {
         res.status(200).json([])
     }else{

@@ -10,7 +10,7 @@ const salesRouter=express.Router();
 
 
 salesRouter.get('/get-storekeeper-sales/:id',auth,getStoreKeeperSales);
-salesRouter.get('/get-shop-sales',auth,getShopSales);
+salesRouter.get('/get-shop-sales/:id',auth,getShopSales);
 salesRouter.get('/get-daily-sales',auth,GetDailySales);
 salesRouter.get('/get-weekly-sales',auth,GetWeeklySales);
 salesRouter.get('/get-monthly-sales',auth,GetMonthlySales);

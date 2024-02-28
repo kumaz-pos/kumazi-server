@@ -35,7 +35,7 @@ const Register=async(req,res)=>{
         phoneNumber:user.phoneNumber,
         storeName:user.storeName,
         role:user.role,
-        owner:user.owner,
+        eployer:user.employer,
       
         token:generateToken(createdUser)
     })
@@ -91,7 +91,8 @@ const getStoreKeepers=async(req,res)=>{
     try {
       console.log(user.userId);
       let employer= user.userId;
-        const storeKeepers= await StoreKeepers.find({employer:employer}).lean();
+      console.log(user);
+        const storeKeepers= await StoreKeepers.find().lean();
         if (storeKeepers) {
             res.status(200).json(storeKeepers)
         }else{
