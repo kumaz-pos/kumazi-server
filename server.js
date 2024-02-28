@@ -27,7 +27,7 @@ app.use('/api/v1/',branchRouter);
 app.use('/api/v1/',storeKeeperRouter);
 const start= async()=>{
     try {
-        await connectDb(process.env.ConnectionString2);
+        await connectDb(process.env.ConnectionString);
         //Start the Server
 app.listen(port,(req,res)=>{
 
