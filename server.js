@@ -12,7 +12,7 @@ const branchRouter = require('./routes/branches');
 const storeKeeperRouter=require("./routes/store-keepers")
 dotenv.config();
 
-app.use(cors({ origin: "http://localhost:3000" , credentials :  true}));
+app.use(cors({ origin: null , credentials :  true}));
 app.use(express.json());
 app.use('/api/v1/',authRouter);
 app.use('/api/v1/',salesRouter);
