@@ -1,12 +1,11 @@
 const Branch= require('../models/branches');
 const Shop= require("../models/shop")
 const createBranch=async(req,res)=>{
-  req.body.createdBy=req.user.userId;
 
 let user= req.user;
 
 const shop= await Shop.findOne({owner:user.userId});
-let shopId= shop._id
+
 
     try {
         const branch=await Branch.create({

@@ -15,7 +15,7 @@ const Register=async(req,res)=>{
 
    
     let checkUser=await checkExistingUser(User,req.body.phoneNumber);
-    console.log(checkUser);
+   
   if (checkUser===true) {
     res.status(401).json({message:"Phone number already exists"});
   }else{
@@ -114,9 +114,9 @@ if (user) {
     const getStoreKeepers=async(req,res)=>{
         try {
             let id= req.params.id
-            console.log(id);
+           
             const storekeepers=await User.find({owner:id});
-            console.log(storekeepers);
+          
             res.status(200).json(storekeepers)
         } catch (error) {
             res.status(500).json({message:"Error in the server"})

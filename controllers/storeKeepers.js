@@ -21,7 +21,8 @@ const Register=async(req,res)=>{
           
               password:bcrypt.hashSync(req.body.password,8),
               role:req.body.role,
-              employer:req.body.employer
+              employer:req.body.employer,
+              country:req.body.country,
               
             },
              
@@ -35,7 +36,8 @@ const Register=async(req,res)=>{
         phoneNumber:user.phoneNumber,
         storeName:user.storeName,
         role:user.role,
-        eployer:user.employer,
+        employer:user.employer,
+        country:user.country,
       
         token:generateToken(createdUser)
     })
@@ -61,7 +63,7 @@ const Register=async(req,res)=>{
 const Login=async(req,res)=>{
     
     const user= await StoreKeepers.findOne({phoneNumber:req.body.phoneNumber}).select("+password");
-    console.log(user);
+ 
 
     if (user) {
         if (bcrypt.compareSync(req.body.password,user.password)) {
@@ -72,6 +74,7 @@ const Login=async(req,res)=>{
                 role:user.role,
                 phoneNumber:user.phoneNumber,
                 employer:user.employer,
+                country:user.country,
                
                
              
@@ -88,17 +91,16 @@ const Login=async(req,res)=>{
     }
 const getStoreKeepers=async(req,res)=>{
     let user=req.user
+    let id= req.params.id;
     try {
-      console.log(user.userId);
-      let employer= user.userId;
-      console.log(user);
-        const storeKeepers= await StoreKeepers.find().lean();
+     
+        const storeKeepers= await StoreKeepers.find({employer:id}).lean();
         if (storeKeepers) {
             res.status(200).json(storeKeepers)
         }else{
             res.status(200).json([])
         }
-        console.log(user);
+       
         
        
     } catch (error) {

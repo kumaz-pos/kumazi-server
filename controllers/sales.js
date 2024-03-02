@@ -97,7 +97,7 @@ const getShopSales=async(req,res)=>{
     try {
         
       
-        const data= await  Sales.find().sort({_id:-1}).lean() ;
+        const data= await  Sales.find({createdBy:id}).sort({_id:-1}).lean() ;
         if(!data){
       res.status(200).json({msg:"You Have Not Added Sales Yet"})
         }

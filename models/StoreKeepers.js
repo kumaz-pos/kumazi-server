@@ -29,7 +29,10 @@ const StoreKeeperSchema= new mongoose.Schema({
     },
     employer:{
         type:String,
-    }
+    },
+    country:{
+        type:String,
+    },
 }
 ,{
     timestamps:true

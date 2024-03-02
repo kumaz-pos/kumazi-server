@@ -1,7 +1,6 @@
 const express= require('express');
 const app= express()
 const cors= require('cors');
-const router = require('./routes/events');
 const connectDb = require('./db/connectDb');
 const dotenv= require('dotenv');
 const port= process.env.PORT||5000;
@@ -27,7 +26,7 @@ app.use('/api/v1/',branchRouter);
 app.use('/api/v1/',storeKeeperRouter);
 const start= async()=>{
     try {
-        await connectDb(process.env.ConnectionString);
+        await connectDb(process.env.ConnectionString2);
         //Start the Server
 app.listen(port,(req,res)=>{
 

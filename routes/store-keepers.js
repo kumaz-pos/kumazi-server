@@ -10,7 +10,7 @@ const storeKeeperRouter=express.Router();
 
 storeKeeperRouter.post('/shop-keeper/register',auth,Register);
 storeKeeperRouter.post('/shop-keeper/login',Login);
-storeKeeperRouter.get('/shop-keeper/get-store-keepers',auth,getStoreKeepers);
+storeKeeperRouter.get('/shop-keeper/get-store-keepers/:id',auth,getStoreKeepers);
 storeKeeperRouter.delete('/shop-keeper/delete-store-keeper/:id',auth,deleteStoreKeeper);
 
 
