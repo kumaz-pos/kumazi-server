@@ -12,11 +12,11 @@ const branchRouter = require('./routes/branches');
 const storeKeeperRouter=require("./routes/store-keepers")
 dotenv.config();
 const corsOptions ={
-    origin:'*', 
-    credentials:true,            //access-control-allow-credentials:true
-    optionSuccessStatus:200
+    AccessControlAllowOrigin: '*',
+   
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE'
 }
-app.use(cors({ credentials: true }))
+app.use(cors(corsOptions))
 app.use(express.json());
 app.use('/api/v1/',authRouter);
 app.use('/api/v1/',salesRouter);
