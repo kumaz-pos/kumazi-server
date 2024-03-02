@@ -11,7 +11,12 @@ const shopRouter = require('./routes/shops');
 const branchRouter = require('./routes/branches');
 const storeKeeperRouter=require("./routes/store-keepers")
 dotenv.config();
-
+app.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
+    next();
+  });
 app.use(cors({ origin: null , credentials :  true}));
 app.use(express.json());
 app.use('/api/v1/',authRouter);
