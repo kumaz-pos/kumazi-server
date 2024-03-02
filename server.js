@@ -24,7 +24,7 @@ const start= async()=>{
     try {
         await connectDb(process.env.ConnectionString);
         //Start the Server
-app.listen(port,(req,res)=>{
+app.listen(port,"0.0.0.0",(req,res)=>{
 
 
     console.log(`Server is Running at Server ${port} connected to the db`)
