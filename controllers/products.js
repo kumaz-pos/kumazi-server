@@ -22,6 +22,7 @@ let owner=req.user
             sellingPrice:req.body.sellingPrice,
             quantityInStock:req.body.quantityInStock,
            valueOfStock:req.body.valueOfStock,
+           currency:req.body.currency,
        
            owner:req.body.owner
            
