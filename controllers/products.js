@@ -90,7 +90,8 @@ const getProduct=async(req,res)=>{
 
 const deleteProduct=async(req,res)=>{
     const id= req.params.id;
-    const product= await Product.findByIdAndDelete(id)
+    const product= await Product.findByIdAndDelete(id);
+    console.log(product);
     res.json({msg:' Product  Deleted Succesfully'});
 }
 
