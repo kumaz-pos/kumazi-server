@@ -17,7 +17,8 @@ app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
     next();
   });
-app.use(cors({ origin: null , credentials :  true}));
+
+app.use(cors({ origin: null , credentials :  true,allowedHeaders:['Content-Type', 'Authorization']}));
 app.use(express.json());
 app.use('/api/v1/',authRouter);
 app.use('/api/v1/',salesRouter);
