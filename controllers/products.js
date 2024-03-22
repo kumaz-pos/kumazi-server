@@ -1,30 +1,29 @@
 const Product= require('../models/Products');
-const Branch= require('../models/branches');
-const Shop= require('../models/shop');
+
 
 const createProduct=async(req,res)=>{
   
 
 
-let owner=req.user
 
+ let {name,unit,quantityBought,quantitiesSold,buyingPrice,sellingPrice,quantityInStock,valueOfStock,currency,owner}=req.body
 
 
     try {
         const product=await Product.create({
-            name:req.body.name,
-            unit:req.body.unit,
+                   name,
+            unit,
 
-            quantityBought:req.body.quantityBought,
-            quantitiesSold:req.body.quantitiesSold,
+            quantityBought,
+            quantitiesSold,
             
-            buyingPrice:req.body.buyingPrice,
-            sellingPrice:req.body.sellingPrice,
-            quantityInStock:req.body.quantityInStock,
-           valueOfStock:req.body.valueOfStock,
-           currency:req.body.currency,
+            buyingPrice,
+            sellingPrice,
+            quantityInStock,
+           valueOfStock,
+           currency,
        
-           owner:req.body.owner
+           owner
            
 
            
@@ -35,7 +34,7 @@ let owner=req.user
            
 
         })
-      //  res.status(201).json({msg:"Message Created Succesfully",body,users:req.body.userId})
+     
         res.status(201).json(product)
     } catch (error) {
         throw error
@@ -57,7 +56,7 @@ try {
 
 
   
-//res.status(201).json({msg:'intangible Edited Succesfully',intangible})
+
 }
 
 
@@ -91,7 +90,7 @@ const getProduct=async(req,res)=>{
 const deleteProduct=async(req,res)=>{
     const id= req.params.id;
     const product= await Product.findByIdAndDelete(id);
-    console.log(product);
+ 
     res.json({msg:' Product  Deleted Succesfully'});
 }
 

@@ -13,12 +13,15 @@ const storeKeeperRouter=require("./routes/store-keepers")
 const compression= require("compression")
 const {rateLimit}= require("express-rate-limit");
 dotenv.config();
-app.use(function(req, res, next) {
+
+function corsFunction(res,next) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT,PATCH,DELETE");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
     next();
-  });
+}
+
+app.use(corsFunction);
 const limiter= rateLimit({
     windowMs:15*60*1000,
     limit:100,

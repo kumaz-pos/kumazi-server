@@ -5,21 +5,21 @@ const createSale=async(req,res)=>{
    
     let user= req.user;
  
- 
+ let {items,paymentMethod,totalPrice,createdBy,currency,owner,name}=req.body
     try {
-      let items= req.body.items;
+   
   
       
         const sale=await Sales.create({
-           items:req.body.items,
-           paymentMethod:req.body.paymentMethod,
+           items,
+           paymentMethod,
            
-            totalPrice:req.body.totalPrice,
+            totalPrice,
             
-            createdBy:req.body.userId,
-            currency:req.body.currency,
-            owner:req.body.owner,
-            name:req.body.name
+            createdBy,
+            currency,
+            owner,
+            name
            
 
         })
@@ -61,15 +61,15 @@ try {
 
 
   
-//res.status(201).json({msg:'intangible Edited Succesfully',intangible})
+
 }
 
 
 
 const getStoreKeeperSales=async(req,res)=>{
-  //console.log("hello");
-   let user= req.user.userId
-  // let branchId= req.params.id;
+ 
+ 
+  
   let storekeeperId= req.params.id
     try {
    
@@ -92,7 +92,7 @@ const getStoreKeeperSales=async(req,res)=>{
 
 const getShopSales=async(req,res)=>{
    let user= req.user
-   let owner=user.userId
+  
    let id= req.params.id
     try {
         

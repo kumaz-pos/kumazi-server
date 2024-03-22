@@ -61,12 +61,12 @@ const Register=async(req,res)=>{
 
 }
 const Login=async(req,res)=>{
-    
-    const user= await StoreKeepers.findOne({phoneNumber:req.body.phoneNumber}).select("+password");
+    let {phoneNumber,password}=req.body
+    const user= await StoreKeepers.findOne({phoneNumber:phoneNumber}).select("+password");
  
 
     if (user) {
-        if (bcrypt.compareSync(req.body.password,user.password)) {
+        if (bcrypt.compareSync(password,user.password)) {
             res.send({
                 _id:user._id,
                 name:user.name,
@@ -90,7 +90,7 @@ const Login=async(req,res)=>{
     res.status(401).send({message:"invalid phone number or password"})
     }
 const getStoreKeepers=async(req,res)=>{
-    let user=req.user
+    
     let id= req.params.id;
     try {
      
@@ -110,7 +110,7 @@ const getStoreKeepers=async(req,res)=>{
   
     }
 const deleteStoreKeeper=async(req,res)=>{
-    let user=req.user;
+ 
     let id= req.params.id
     try {
       

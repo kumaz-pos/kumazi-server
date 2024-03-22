@@ -11,6 +11,7 @@ return true
     
 }
 const Register=async(req,res)=>{
+    let {phoneNumber,password,name,role,owner,country}=req.body
    try {
 
    
@@ -21,16 +22,16 @@ const Register=async(req,res)=>{
   }else{
     const user=new  User({
         
-        name:req.body.name,
-        phoneNumber:req.body.phoneNumber,
+        name,
+        phoneNumber,
      
         
       
       
-          password:bcrypt.hashSync(req.body.password,8),
-          role:req.body.role,
-          owner:req.body.owner,
-          country:req.body.country
+          password:bcrypt.hashSync(password,8),
+          role,
+          owner,
+          country
          
         },       
  
@@ -70,11 +71,11 @@ res.status(201).send({
 
 }
 const Login=async(req,res)=>{
-    
-    const user= await User.findOne({phoneNumber:req.body.phoneNumber});
+    let {phoneNumber,password}=req.body
+    const user= await User.findOne({phoneNumber});
 
 if (user) {
-    if (bcrypt.compareSync(req.body.password,user.password)) {
+    if (bcrypt.compareSync(password,user.password)) {
         res.send({
             _id:user._id,
             name:user.name,

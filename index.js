@@ -3,7 +3,7 @@
 const cluster= require("cluster");
 const cCPUS= require("os").cpus().length;
 
-const server= require("./server")
+
 
 const start= require("./server")
 
